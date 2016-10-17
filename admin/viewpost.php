@@ -1,14 +1,13 @@
 <?php include 'inc/header.php';?>
 <?php include 'inc/sidebar.php';?>
 
-
  <?php
 
-        if(!isset($_GET['editpostid']) || $_GET['editpostid']==NULL){
+        if(!isset($_GET['viewpostid']) || $_GET['viewpostid']==NULL){
           header("Location:postlist.php");
         }else{
 
-         $postid=$_GET['editpostid'];
+         $postid=$_GET['viewpostid'];
 
 
         }
@@ -21,84 +20,8 @@
 
        <?php
                if($_SERVER['REQUEST_METHOD']=='POST'){
-                $cat=$_POST['cat'];
-                $title=$_POST['title'];
-                $body=$_POST['body'];
-                $author=$_POST['author'];
-                $userid=$_POST['userid'];
-                $tags=$_POST['tags'];
-
-          $cat=mysqli_real_escape_string($db->link, $cat);
-          $title=mysqli_real_escape_string($db->link, $title);
-          $body=mysqli_real_escape_string($db->link, $body);
-          $author=mysqli_real_escape_string($db->link, $author);
-            $userid=mysqli_real_escape_string($db->link, $userid);
-          $tags=mysqli_real_escape_string($db->link, $tags);
-
-          //$permited  = array('jpg', 'jpeg', 'png', 'gif');
-           $file_name = $_FILES['image']['name'];
-           $file_size = $_FILES['image']['size'];
-            $file_temp = $_FILES['image']['tmp_name'];
-              $folder = "upload/";
-     
-          if($cat==" "|| $title==" " || $body==" "||$author==" "|| $tags==" "){
-
-            echo "<span class= 'error'>Field Must not be Empty !..</span>";
-          }
-
-          elseif(!empty($file_name)){
-              move_uploaded_file($file_temp, $folder.$file_name);
-           $query="update tbl_post
-          SET
-        cat='$cat',
-        title='$title',
-        body='$body',
-        author='$author',
-        userid='$userid',
-        tags='$tags',
-        image='$file_name'
-
-         WHERE id='$postid'";
-          $upadated_row=$db->update($query);
-
-          if($upadated_row){
-
-             echo "<span class= 'success'>Post Upadted successfully</span>";
-
-          }else{
-
-            echo "<span class= 'error'>Post Not updated</span>";
-
-          }
-
-
-    }else{
-
-        $query="update tbl_post
-          SET
-        cat='$cat',
-        title='$title',
-        body='$body',
-        author='$author',
-        userid='$userid',
-           tags='$tags' 
-         WHERE id='$postid'";
-          $upadated_row=$db->update($query);
-
-          if($upadated_row){
-
-             echo "<span class= 'success'>Post Upadted successfully</span>";
-
-          }else{
-
-            echo "<span class= 'error'>Post Not updated</span>";
-
-          }
-
-
-    }
-}
-
+                  }
+              
     ?>
 
             <div class="block"> 
@@ -119,7 +42,7 @@
                                 <label>Title</label>
                             </td>
                             <td>
-                                <input type="text"  name="title" value="<?php echo $postresult['title']?>" class="medium" />
+                                <input type="text"   readonly value="<?php echo $postresult['title']?>" class="medium" />
                             </td>
                         </tr>
                      
@@ -128,8 +51,8 @@
                                 <label>Category</label>
                             </td>
                             <td>
-                                <select id="select" name="cat">
-                                    <option>Select Category</option>
+                                <select    id="select" name="cat">
+                                    <option  readonly >Select Category</option>
                                      <?php
                                 $query="select* from tbl_catagory ";
                                 $category=$db->select($query);
@@ -155,8 +78,8 @@
                                 <label>Upload Image</label>
                             </td>
                             <td>
-                            <img src="upload/<?php echo $postresult ['image']?>" height="50px" width="200px"/></br>
-                                <input type="file" name="image" />
+                            <img src="upload/<?php echo $postresult ['image']?>" height="100px" width="250px"/></br>
+                              
                             </td>
                         </tr>
                         <tr>
@@ -164,7 +87,7 @@
                                 <label>Content</label>
                             </td>
                             <td>
-                                <textarea name="body">
+                                <textarea readonly name="body">
                                   
                                 <?php echo $postresult['body'];?>" 
                                 </textarea>
@@ -180,7 +103,7 @@
                                 <label>Tag</label>
                             </td>
                             <td>
-                                <input type="text" name="tags" " class="medium"value="<?php echo $postresult['tags'];?>"  />
+                                <input type="text" readonly  class="medium"value="<?php echo $postresult['tags'];?>"  />
                             </td>
                         </tr>
                           <tr>
@@ -188,9 +111,9 @@
                                 <label>Author</label>
                             </td>
                             <td>
-                                <input type="text" name="author" " class="medium" value="<?php echo $postresult['author']?>"  />
+                                <input type="text" readonly class="medium" value="<?php echo $postresult['author']?>"  />
 
-                                  <input type="hidden" name="userid" " class="medium" value="<?php echo Session::get('userId')?>" />
+                                  <input type="hidden" readonly class="medium" value="<?php echo Session::get('userId')?>" />
                             </td>
                         </tr>
 						<tr>

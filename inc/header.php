@@ -12,7 +12,7 @@ $fm=new Format();
 <html>
 <head>
 <?php 
-if(isset($_GET['pageid'])){
+   if(isset($_GET['pageid'])){
 
 
     $pagetitleid=$_GET['pageid'];
@@ -44,8 +44,24 @@ if(isset($_GET['pageid'])){
 
     <meta name="language" content="English">
     <meta name="description" content="It is a website about education">
-    <meta name="keywords" content="blog,cms blog">
-    <meta name="author" content="Delowar">
+
+    <?php 
+
+if (isset($_GET['id'])){
+   $keyid=$_GET['id'];
+ $query="select * from tbl_post where id=' $keyid' ";
+                     $keywords=$db->select($query);
+                    if($keywords){
+                    while ($result=$keywords->fetch_assoc()) { ?>
+
+                    <meta name="keywords" content="<?php echo $result['tags']?>">
+                     <?php }} else{ ?>
+
+                 <meta name="keywords" content="<?php echo KEYWORDS; ?>">
+
+                 <?php   } }?>
+
+
     <link rel="stylesheet" href="font-awesome-4.5.0/css/font-awesome.css">
     <link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="style.css">

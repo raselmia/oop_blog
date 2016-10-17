@@ -48,7 +48,7 @@
                     <table class="form">					
                         <tr>
                             <td>
-                                <input type="text" name="note"  require="required"value="<?php echo $result['note']?>"   class="large" />
+                                <input type="text" name="note"  require="required" value="<?php echo $result['note']?>"   class="large" />
                             </td>
                         </tr>
 						

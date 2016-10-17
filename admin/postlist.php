@@ -56,7 +56,7 @@
 					<tbody>
 						<tr class="odd gradeX">
 							<td><?php echo $i;?></td>
-							<td><a href="editpost.php?editpostid=<?php echo $result['id'];?>"><?php echo $result['title']?></a></td>
+							<td><?php echo $result['title']?></a></td>
 						     <td><?php echo $result['name']?></td>
 							  <td><?php echo $fm->textshorten($result['body'],100)?></td>
 							 <td><img src="upload/<?php echo $result ['image']?>"height="50px" width="50px"/></td>
@@ -64,10 +64,20 @@
 						     <td><?php echo $result['tags']?></td>
 						     <td><?php echo $fm->formateDate($result['date'])?></td>
 				
-							<td><a href="editpost.php?editpostid=<?php echo $result['id']?>">Edit</a> || 
+							<td>
+								<a href="viewpost.php?viewpostid=<?php echo $result['id']?>">View</a> 
 
+							<?php
+								if(Session::get('userId')== $result['userid'] || Session::get('userRole')=='0')
+									{?>
 
+						
+							||<a href="editpost.php?editpostid=<?php echo $result['id']?>">Edit</a> || 
+	
                               <a onclick= "return confirm('Are you want to Delete')" href="deletepost.php?delpostid=<?php echo $result['id']?>">Delete</a> 
+
+                              	<?php }?>
+                              	</td>
 						</tr>
 						<?php } }?>
 						

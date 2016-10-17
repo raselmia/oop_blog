@@ -11,12 +11,14 @@
                 $title=$_POST['title'];
                 $body=$_POST['body'];
                 $author=$_POST['author'];
+                $userid=$_POST['userid'];
                 $tags=$_POST['tags'];
 
           $cat=mysqli_real_escape_string($db->link, $cat);
           $title=mysqli_real_escape_string($db->link, $title);
           $body=mysqli_real_escape_string($db->link, $body);
           $author=mysqli_real_escape_string($db->link, $author);
+          $userid=mysqli_real_escape_string($db->link, $userid);
           $tags=mysqli_real_escape_string($db->link, $tags);
 
           //$permited  = array('jpg', 'jpeg', 'png', 'gif');
@@ -25,14 +27,14 @@
             $file_temp = $_FILES['image']['tmp_name'];
               $folder = "upload/";
      
-          if(empty($cat) or empty($title) or empty($body) or empty($author)or empty($tags) or empty($file_name)){
+          if(empty($cat) or empty($title) or empty($body) or empty($author)or empty($tags) or empty($file_name) or empty($userid)){
 
             echo "<span class= 'error'>Field Must not be Empty !..</span>";
           }
 
           else{
               move_uploaded_file($file_temp, $folder.$file_name);
-          $query="INSERT INTO tbl_post (cat,title,body,image,author,tags) VALUES('$cat','$title','$body','$file_name','$author','$tags')";
+          $query="INSERT INTO tbl_post (cat,title,body,image,author,tags,userid) VALUES('$cat','$title','$body','$file_name','$author','$tags','$userid')";
           $inserted_rows=$db->insert($query);
 
           if($inserted_rows){
@@ -120,7 +122,8 @@
                                 <label>Author</label>
                             </td>
                             <td>
-                                <input type="text" name="author" " class="medium" placeholder="Enter Author Name..." />
+                                <input type="text" name="author" " class="medium" value="<?php echo Session::get('username')?>" />
+                                <input type="hidden" name="userid" " class="medium" value="<?php echo Session::get('userId')?>" />
                             </td>
                         </tr>
 						<tr>

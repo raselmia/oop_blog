@@ -39,14 +39,13 @@ $fm=new Format();
   		$result=$db->select($query);
   		if($result !=false){
 
-
-  			$value=mysqli_fetch_array($result);
-  			$row=mysqli_num_rows($result);
-  			if($row>0){
-
+  			//$value=mysqli_fetch_array($result);
+  			
+          $value=$result->fetch_assoc();
   					Session::set("login",true);
   					Session::set("username",$value['username']);
-  					Session::set("userId",$value['id']);
+            Session::set("userId",$value['id']);
+  					Session::set("userRole",$value['role']);
   					header('Location:index.php');
 
   			}else{
@@ -62,7 +61,7 @@ $fm=new Format();
   		}
 
 
-  }
+  
 
 
 	?>
